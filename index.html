@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="UI Fresh - uifresh.net" />
+    <title>payment form</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/5669600ece.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      body {
+        color: #111;
+        background-color: #f3f6f1;
+      }
+
+      @media (min-width: 576px) {
+        .uf-contact-form-03 {
+          min-height: 100vh;
+          align-content: center;
+        }
+      }
+
+      .uf-cf-03-main {
+        max-width: 450px;
+      }
+
+      .uf-ct-03-img {
+        max-width: 350px;
+        width: 100%;
+      }
+
+      .uf-contact-form-03-body {
+        position: relative;
+      }
+
+      .uf-ct-03-text-primary {
+        color: #99cf25;
+      }
+
+      .uf-ct-03-bg-primary {
+        background-color: #99cf25;
+      }
+
+      .uf-ct-03-btn-primary {
+        background-color: #99cf25;
+        color: #111;
+      }
+
+      .uf-ct-03-btn-primary:hover {
+        background-color: #111;
+        color: #fff;
+      }
+
+      .uf-ct-03-input-group-text {
+        min-width: 44px;
+      }
+
+      .form-control {
+        padding: 0.75rem;
+      }
+
+      .form-control:focus {
+        border-color: #99cf25;
+        box-shadow: unset;
+        background-color: #efefef;
+      }
+
+      .loading-spinner {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0%;
+        top: 17%;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto;
+        z-index: 999;
+        background-color: rgba(255, 255, 255, 0.75);
+      }
+
+      .fa-spinner {
+        font-size: 3em;
+        color: #99cf25;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="uf-contact-form-03">
+      <div class="container text-center">
+        <div class="row justify-content-center align-items-center my-4">
+          <div class="col" style="position: relative">
+            <div class="loading-spinner" id="loadingSpinner">
+              <i class="fa-solid fa-spinner"></i>
+            </div>
+            <div class="uf-ct-03-header">
+              <img
+                src="https://raw.githubusercontent.com/iayushsahu/sales-form/main/images/supports.png"
+                alt=""
+                class="uf-ct-03-img"
+              />
+            </div>
+            <div
+              class="uf-cf-03-main bg-white py-5 px-lg-5 px-md-4 px-3 mx-auto rounded-4"
+              id="packageSelection"
+            >
+              <h2 class="text-uppercase fw-bold">Select a Package 📦</h2>
+              <div
+                class="input-group mb-3"
+                onclick="selectPackage('$49 - 10 Days')"
+              >
+                <i
+                  class="fa-regular fa-1 input-group-text uf-ct-03-input-group-text lh-lg"
+                ></i>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="$49    -   10 Days"
+                  readonly
+                />
+              </div>
+              <div
+                class="input-group mb-3"
+                onclick="selectPackage('$99 - 2 Months')"
+              >
+                <i
+                  class="fa-regular fa-2 input-group-text uf-ct-03-input-group-text lh-lg"
+                ></i>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="$99    -   2 Months"
+                  readonly
+                />
+              </div>
+              <div
+                class="input-group mb-3"
+                onclick="selectPackage('$399 - Unlimited')"
+              >
+                <i
+                  class="fa-regular fa-3 input-group-text uf-ct-03-input-group-text lh-lg"
+                ></i>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="$399  -   Unlimited"
+                  readonly
+                />
+              </div>
+              <button
+                class="btn btn-lg uf-ct-03-btn-primary text-uppercase w-100"
+                onclick="nextStep()"
+              >
+                Continue
+              </button>
+            </div>
+            <div
+              class="uf-cf-03-main bg-white py-5 px-lg-5 px-md-4 px-3 mx-auto rounded-4 d-none"
+              id="paymentCollection"
+            >
+              <h2 class="text-uppercase fw-bold">Payment Form</h2>
+              <form id="paymentForm" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                  <i
+                    class="fa-regular fa-user input-group-text uf-ct-03-input-group-text lh-lg"
+                  ></i>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Your name"
+                    id="uname"
+                    name="uname"
+                    required
+                  />
+                </div>
+                <div class="input-group mb-3">
+                  <i
+                    class="fa-regular fa fa-whatsapp input-group-text uf-ct-03-input-group-text lh-lg"
+                  ></i>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="WhatsApp Number"
+                    id="unumber"
+                    name="unumber"
+                    required
+                  />
+                </div>
+                <div class="input-group mb-3">
+                  <i
+                    class="fa-regular fa-dollar-sign input-group-text uf-ct-03-input-group-text lh-lg"
+                  ></i>
+                  <input
+                    type="email"
+                    class="form-control"
+                    value="TUKmUuTHJWsw3QdJBwN4DkuxVbtZFvkoMX"
+                    readonly
+                    id="paymentAddress"
+                  />
+                  <button
+                    class="btn uf-ct-03-btn-primary"
+                    type="button"
+                    onclick="copyAddress()"
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div class="input-group mb-3 input-group-text lh-lg">
+                  <input
+                    type="file"
+                    required
+                    style="
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      max-width: 100%;
+                    "
+                    id="snapshot"
+                    name="snapshot"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-lg uf-ct-03-btn-primary text-uppercase w-100"
+                  onclick="submitPayment(event)"
+                >
+                  Submit
+                </button>
+              </form>
+              <br />
+              <p style="text-align: justify">
+                <strong class="text-danger">Note:</strong> Copy this USDT wallet
+                address and ensure you use
+                <span class="text-light bg-dark">TRON (TRC20)</span> as the
+                blockchain network.
+              </p>
+            </div>
+            <div
+              class="uf-cf-03-main bg-white py-5 px-lg-5 px-md-4 px-3 mx-auto rounded-4 d-none"
+              id="telegramSection"
+            >
+              <h2 class="text-uppercase fw-bold">
+                Thankyou <i class="fa-regular fa-smile"></i>
+              </h2>
+              <br />
+              <a href="https://t.me/+5MgqF1D8uUo5N2Q1" target="_blank"
+                ><button
+                  class="btn btn-lg uf-ct-03-btn-primary text-uppercase w-100"
+                >
+                  Join Our Telegram
+                  <i class="fa-brands fa-telegram"></i></button
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      let selectedPackage = null;
+
+      function selectPackage(packageName) {
+        selectedPackage = packageName;
+      }
+
+      function nextStep() {
+        if (!selectedPackage) {
+          Swal.fire({
+            title: "No Package Selected",
+            text: "Please select a package before proceeding.",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
+        } else {
+          Swal.fire({
+            title: "Proceeding to Payment",
+            text: `You selected: ${selectedPackage}`,
+            icon: "info",
+            confirmButtonText: "OK",
+          }).then(() => {
+            document.getElementById("packageSelection").classList.add("d-none");
+            document
+              .getElementById("paymentCollection")
+              .classList.remove("d-none");
+            document
+              .getElementById("paymentCollection")
+              .classList.add("d-block");
+
+            document.querySelector(
+              "#paymentCollection h2"
+            ).innerHTML = `Payment Form (${selectedPackage})`;
+          });
+        }
+      }
+
+      function copyAddress() {
+        var addressField = document.getElementById("paymentAddress");
+        navigator.clipboard.writeText(addressField.value);
+        Swal.fire({
+          icon: "success",
+          title: "Copied!",
+          text: "copied successfully!",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+
+      function submitPayment(event) {
+        event.preventDefault();
+
+        var uname = document.getElementById("uname").value.trim();
+        var unumber = document.getElementById("unumber").value.trim();
+        var snapshot = document.getElementById("snapshot").files.length;
+
+        if (uname === "" || unumber === "" || snapshot === 0) {
+          Swal.fire({
+            icon: "error",
+            title: "Incomplete Form",
+            text: "Complete all fields to enable form submission.",
+            confirmButtonText: "OK",
+          });
+          return;
+        }
+
+        var spinner = document.getElementById("loadingSpinner");
+        spinner.style.display = "flex";
+
+        let formData = new FormData();
+        formData.append("uname", uname);
+        formData.append("unumber", unumber);
+        formData.append("package", selectedPackage);
+        formData.append(
+          "snapshot",
+          document.getElementById("snapshot").files[0]
+        );
+
+        fetch("/submit-form", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            spinner.style.display = "none";
+            if (result.success) {
+              Swal.fire({
+                icon: "success",
+                title: "Wow!",
+                html: "✅ Thanks for choosing us! <br> An admin will approve your request shortly.",
+                timer: 3000,
+                confirmButtonText: "OK",
+              });
+              document
+                .getElementById("paymentCollection")
+                .classList.add("d-none");
+              document
+                .getElementById("telegramSection")
+                .classList.remove("d-none");
+              document
+                .getElementById("telegramSection")
+                .classList.add("d-block");
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Failed to submit details. Try again later.",
+                confirmButtonText: "OK",
+              }).then(() => {
+                window.location.reload();
+              });
+            }
+          })
+          .catch((error) => {
+            spinner.style.display = "none";
+            console.error("Error submitting form:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Error!",
+              text: "Something went wrong. Please try again later.",
+              confirmButtonText: "OK",
+            }).then(() => {
+              window.location.reload();
+            });
+          });
+      }
+    </script>
+  </body>
+</html>
